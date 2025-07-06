@@ -72,7 +72,7 @@ function KanbanProvider({ children, username }) {
 
   useEffect(() => {
     async function fetchTasks() {
-      const res = await fetch(`http://localhost:3001/tasks?username=${username}`);
+      const res = await fetch(`https://kanbanboard-hdxb.onrender.com/tasks?username=${username}`);
       const data = await res.json();
 
       const grouped = { todo: [], inProgress: [], done: [] };
@@ -110,7 +110,7 @@ function TaskInput() {
     e.preventDefault();
     if (!text.trim()) return;
 
-    const res = await fetch("http://localhost:3001/tasks", {
+    const res = await fetch("https://kanbanboard-hdxb.onrender.com/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, text }),
@@ -175,7 +175,7 @@ function Card({ card, from, setShareModelData }) {
   const handleEditSubmit = async () => {
     const trimmed = editedText.trim();
     if (trimmed && trimmed !== card.text) {
-      await fetch(`http://localhost:3001/tasks/${card.id}`, {
+      await fetch(`https://kanbanboard-hdxb.onrender.com/tasks/${card.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: trimmed, status: from }),
@@ -196,7 +196,7 @@ function Card({ card, from, setShareModelData }) {
   const handleDrop = async (e) => {
     e.preventDefault();
     const data = JSON.parse(e.dataTransfer.getData("card"));
-    await fetch(`http://localhost:3001/tasks/${data.card.id}`, {
+    await fetch(`https://kanbanboard-hdxb.onrender.com/tasks/${data.card.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: data.card.text, status: from }),
@@ -247,7 +247,7 @@ function Column({ title, columnKey, className, setShareModelData }) {
     const handleDrop = async (e) => {
       e.preventDefault();
       const data = JSON.parse(e.dataTransfer.getData("card"));
-      await fetch(`http://localhost:3001/tasks/${data.card.id}`, {
+      await fetch(`https://kanbanboard-hdxb.onrender.com/tasks/${data.card.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: data.card.text, status: columnKey }),
@@ -298,7 +298,7 @@ function KanbanBoard() {
 
   const handleConfirmDelete = async () => {
     if (modelData) {
-      await fetch(`http://localhost:3001/tasks/${modelData.card.id}`, { method: "DELETE" });
+      await fetch(`https://kanbanboard-hdxb.onrender.com/tasks/${modelData.card.id}`, { method: "DELETE" });
       dispatch({ type: "DELETE_TASK", payload: { cardId: modelData.card.id, from: modelData.from } });
       setModelData(null);
     }
@@ -348,7 +348,7 @@ function KanbanBoard() {
                 onClick={async () => {
                   if (shareModelData.toUsername) {
                     const res = await fetch(
-                      `http://localhost:3001/tasks/${shareModelData.card.id}/share`,
+                      `https://kanbanboard-hdxb.onrender.com/tasks/${shareModelData.card.id}/share`,
                       {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
