@@ -4,13 +4,13 @@ import './Signup.css'; // ✅ Use your separate CSS file
 function Signup({ onSignupComplete, switchToLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // ✅ Inline error
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setErrorMessage('');
 
-    const res = await fetch('http://localhost:3001/signup', {
+    const res = await fetch('https://kanbanboard-hdxb.onrender.com/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
